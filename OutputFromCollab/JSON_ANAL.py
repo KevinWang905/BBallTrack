@@ -52,3 +52,8 @@ coord_df.columns = ['Frame', 'Head_X', 'Head_Y', 'Chest_X', 'Chest_Y', 'Shoulder
 					'Toes_L_X', 'Tose_L_Y','Heel_L_X', 'Heel_L_Y','Ses_R_X', 'Ses_R_Y','Toes_R_X', 'Tose_R_Y','Heel_R_X', 'Heel_R_Y']
 coord_df.to_csv("coord_df.csv")
 
+################################################################
+############# Update Log #######################
+
+# February 20, 2021
+# File Created
