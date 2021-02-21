@@ -1,4 +1,4 @@
-# Author: Kevin Wang
+# Author(s): Kevin Wang
 # Last Update: Feb 20, 2021
 
 # Function: Parses JSON files for anatomic coordinate information extracted via OpenPose
@@ -28,6 +28,7 @@ def extract_coords(framenum):
     try:
 	    #print(data['people'][0]['pose_keypoints_2d'])
 	    full_data = data['people'][0]['pose_keypoints_2d']
+		# Every 3rd element is a confidence rating, we dont need those
 	    for i in range (0, len(full_data)):
 	        if i % 3 != 2:
 
