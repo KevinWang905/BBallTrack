@@ -113,7 +113,7 @@ BodyParts.append(BodyPart(TRUNK_HEAD_NECK, "trunk head neck", 0, 0, 0, 0, 0, 0, 
 Shooters.append(Shooter(DAME, "Damian Lillard", 1.88, 88, 'R'))
 Shooters.append(Shooter(KAT, "Karl-Anthony Towns", 2.11, 112, 'R'))
 Shooters.append(Shooter(STEPH, "Stephen Curry", 1.91, 86, 'R'))
-Shooters.append(Shooter(ALEX, "Alex Dolmaya", 1.78, 87, 'R'))
+Shooters.append(Shooter(ALEX, "Alex Dolmaya", 1.78, 86, 'R'))
 Shooters.append(Shooter(CHRIS, "Christopher Calogero", 1.83, 77, 'R'))
 Shooters.append(Shooter(THOMAS, "Thomas Nguyen", 1.85, 73, 'L'))
 
