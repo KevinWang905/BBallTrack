@@ -80,10 +80,16 @@ def ball_shoulder(frame):
 	distance = getDistance(ball_coords, shoulder_coords)
 	return distance
 
+def ball_height(frame):
+	ball_coords = rawData.loc[frame,'Wrist_L_Y']
+	ankle_coords = rawData.loc[frame,'Ankle_L_Y']
+	distance = abs(ball_coords-ankle_coords)
+	return distance
+
 def get_parameters():
 	param_list = [] 
 	for i in range(len(rawData)):
-		param_list = param_list + [[i,shoulder_flexion(i),elbow_flexion(i),knee_flexion(i),trunk_flexion(i), wrist_flexion(i), finger_flexion(i), ball_shoulder(i), rawData.loc[i,'Wrist_L_Y']]]
+		param_list = param_list + [[i,shoulder_flexion(i),elbow_flexion(i),knee_flexion(i),trunk_flexion(i), wrist_flexion(i), finger_flexion(i), ball_shoulder(i), ball_height(i)]]
 	params = pd.DataFrame(param_list, columns = ['frame', 'shoulder_flexion', 'elbow_flexion', 'knee_flexion', 'trunk flexion', 'wrist_flexion', 'finger_flexion', 'ball_from_body','ball_height'])
 	params.to_csv("params_df.csv")
 	return 0
