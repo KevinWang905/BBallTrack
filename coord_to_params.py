@@ -1,7 +1,7 @@
 # Author(s): Kevin Wang
-# Last Update: April 1, 2021
+# Last Update: April 11, 2021
 
-# Function: Parses output csv from JSON_ANAL.py for paramters from raw data
+# Function: Parses output csv from JSON_keypoints.py for paramters from raw data
 # Outputs: 1 csv file
 
 
@@ -77,16 +77,41 @@ def finger_flexion(frame):
 def ball_shoulder(frame):
 	ball_coords = (rawData.loc[frame,'Wrist_R_X'], rawData.loc[frame,'Wrist_R_Y'])
 	shoulder_coords = (rawData.loc[frame,'Shoulder_R_X'], rawData.loc[frame,'Shoulder_R_Y'])
-	distance = getDistance(ball_coords, shoulder_coords)
+	distance = getDistance(ball_coords, shoulder_coords)/heightratio
+	return distance
+
+def ball_height(frame):
+	ball_coords = rawData.loc[frame,'Wrist_R_Y']
+	ankle_coords = rawData.loc[frame,'Ankle_R_Y']
+	distance = abs(ball_coords-ankle_coords)/heightratio
 	return distance
 
 def get_parameters():
 	param_list = [] 
 	for i in range(len(rawData)):
-		param_list = param_list + [[i,shoulder_flexion(i),elbow_flexion(i),knee_flexion(i),trunk_flexion(i), wrist_flexion(i), finger_flexion(i), ball_shoulder(i), rawData.loc[i,'Wrist_R_Y']]]
+		param_list = param_list + [[i,shoulder_flexion(i),elbow_flexion(i),knee_flexion(i),trunk_flexion(i), wrist_flexion(i), finger_flexion(i), ball_shoulder(i), ball_height(i)]]
 	params = pd.DataFrame(param_list, columns = ['frame', 'shoulder_flexion', 'elbow_flexion', 'knee_flexion', 'trunk flexion', 'wrist_flexion', 'finger_flexion', 'ball_from_body','ball_height'])
 	params.to_csv("params_df.csv")
 	return 0
 
+def get_components():
+	param_list = [] 
+	for i in range(len(rawData)):
+		param_list = param_list + [[i,rawData.loc[i,'Knee_R_X']/heightratio,rawData.loc[i,'Knee_R_Y']/heightratio,
+									  rawData.loc[i,'Elbow_R_X']/heightratio,rawData.loc[i,'Elbow_R_Y']/heightratio,
+									  rawData.loc[i,'Shoulder_R_X']/heightratio,rawData.loc[i,'Shoulder_R_Y']/heightratio,
+									  rawData.loc[i,'Groin_X']/heightratio,rawData.loc[i,'Groin_Y']/heightratio]]
+	params = pd.DataFrame(param_list, columns = ['frame', 'Knee_X', 'Knee_Y', 'Elbow_X', 'Elbow_Y', 'Shoulder_X', 'Shoulder_Y', 'Groin_X','Groin_Y'])
+	params.to_csv("component_x_y.csv")
+	return 0
+
+head_h = rawData.loc[0,'Head_Y']
+toe_h = rawData.loc[0,'Toes_R_Y']
+
 print(Shooters[DAME].height)
-get_parameters()
+print(abs(head_h-toe_h))
+
+heightratio = abs(head_h-toe_h)/Shooters[DAME].height
+
+#get_parameters()
+get_components()
